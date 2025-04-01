@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int deleteAndEarn(vector<int>& nums) {
+        unordered_map<int,int>cnt;
+        for(auto it : nums) cnt[it]++;
+        vector<int>dp(*max_element(nums.begin(),nums.end())+1,0); //Lưu trữ số điểm tối đa từ dp[0] -> dp[i]
+        dp[0] = 0;
+        dp[1] = cnt[1] * 1;
+        dp[2] = cnt[2] * 2;
+        for(int i=3;i<=*max_element(nums.begin(),nums.end());++i){
+            dp[i] = max(dp[i-1],dp[i-2] + (cnt[i]*i));
+        }
+        return dp[*max_element(nums.begin(),nums.end())];
+    }
+};
